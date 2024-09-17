@@ -1,25 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>Developing with Flask</h1>
 
-<p>This is a blogging website designed by {{ first_name|upper }}</p>
+    <p>This is a blogging website designed by {{ first_name|upper }}</p>
 
-{{ stuff|safe }} 
-<br>
-{{ stuff|striptags }}
-<br>
-{{ stuff|title }}
+    {{ stuff|safe }} 
+    <br>
+    {{ stuff|striptags }}
+    <br>
+    {{ stuff|title }}
 
-{{ favorite_pizza }}
+    {{ favorite_pizza }}
 
-<h3>Favorite Pizza</h3>
+    <h3>Favorite Pizza</h3>
 
-{% for topping in favorite_pizza %}
-    {% if topping == 41 %}
-        {{ topping + 100 }} <br/>
-    {% else %}
-        {{ topping }} <br/>
-    {% endif %}
-{% endfor %}
+    {% for topping in favorite_pizza %}
+        {% if topping == 41 %}
+            {{ topping + 100 }} <br/>
+        {% else %}
+            {{ topping }} <br/>
+        {% endif %}
+    {% endfor %}
 
-{{ favorite_pizza.0 }}      <!--prints the first item -->
+    {{ favorite_pizza.0 }}      <!--prints the first item -->
 
-{{ favorite_pizza.3 + 10 }}      <!--and 10 to the 4th item and then print -->
+    {{ favorite_pizza.3 + 10 }}      <!--and 10 to the 4th item and then print -->
+
+{% endblock %}
