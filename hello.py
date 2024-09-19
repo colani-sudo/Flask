@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -100,6 +100,27 @@ def index():
     return render_template("index.html",first_name=first_name,
                            stuff=stuff,favorite_pizza=favorite_pizza)
 
+# Update Database Record
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    form = UserForm()           # We can used the same user form we already have
+    name_to_update = Users.query.get_or_404(id) # get this id or show 404 error if it does not exist
+    if request.method == 'POST':        # remember to import request
+              
+        name_to_update.name = request.form['name']
+        name_to_update.email = request.form['email']
+        try:
+            db.session.commit()
+            flash("User Updated Successfully")
+            return render_template("update.html",
+                                   form=form,name_to_update=name_to_update)
+        except Exception as e:
+            flash(f"Error! Looks like there was a problem: {e}")
+            return render_template("update.html",
+                                   form=form,name_to_update=name_to_update)
+    else:
+        return render_template("update.html",form=form,name_to_update=name_to_update)
+
 # localhost:5000/user/Colani
 @app.route('/user/<name>')
 def user(name):
@@ -124,7 +145,7 @@ def add_user():
         flash("User Added Successfully!")
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", 
-                           form=form, name=name, 
+                           form=form,name=name, 
                            our_users=our_users)
 
 # Create Custom Error Pages
