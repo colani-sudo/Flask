@@ -9,13 +9,17 @@ from datetime import datetime, timezone
 # Create a Flask Instance
 app = Flask(__name__)       # allows Flask to know where to look for templates and static files
 
-# Add Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# Old SQLite Database
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+
+# New MySQL Database
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/db_name'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/users'
 
 # Create a CSRF key to protect the form when submitting
 app.config['SECRET_KEY'] = "my super secret key for form submition"
 
-# Initialize the database
+# Initialize the database / database instance 
 db = SQLAlchemy(app)
 
 # Create a model
@@ -39,6 +43,41 @@ class UserForm(FlaskForm):
 class NameForm(FlaskForm):
     name = StringField("What's Your Name", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+    # BooleanField
+    # DateField
+    # DateTimeField
+    # DecimalField
+    # FileField
+    # HiddenField
+    # MultipleField
+    # FieldList
+    # FloatField
+    # FormField
+    # IntegerField
+    # PasswordField
+    # RadioField
+    # SelectField
+    # SelectMultipleField
+    # SubmitField
+    # StringField
+    # TextAreaField
+
+    # Validators
+    # DataRequired
+    # Email
+    # EqualTo
+    # InputRequired
+    # IPAddress
+    # Length
+    # MacAddress
+    # NumberRange
+    # Optional
+    # Regexp
+    # URL
+    # UUID
+    # AnyOf
+    # NoneOf
 
 #-FILTERS---------
 # safe
