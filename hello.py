@@ -104,6 +104,25 @@ def index():
     return render_template("index.html",first_name=first_name,
                            stuff=stuff,favorite_pizza=favorite_pizza)
 
+@app.route('/delete/<int:id>')
+def delete(id):
+    user_to_delete =  Users.query.get_or_404(id)
+    name = None
+    form = UserForm()
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User Deleted Successfully.")
+
+        our_users = Users.query.order_by(Users.date_added)
+        return render_template("add_user.html", 
+                           form=form,name=name, 
+                           our_users=our_users)
+    except:
+        flash("Whoops! There was a problem deleting user. Try again!!!")
+        return render_template("add_user.html", 
+                           form=form,name=name, 
+                           our_users=our_users)
 # Update Database Record
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -118,13 +137,15 @@ def update(id):
             db.session.commit()
             flash("User Updated Successfully")
             return render_template("update.html",
-                                   form=form,name_to_update=name_to_update)
+                                   form=form,name_to_update=name_to_update,id=id)
         except Exception as e:
             flash(f"Error! Looks like there was a problem: {e}")
             return render_template("update.html",
-                                   form=form,name_to_update=name_to_update)
+                                   form=form,name_to_update=name_to_update,id=id)
     else:
-        return render_template("update.html",form=form,name_to_update=name_to_update)
+        return render_template("update.html",form=form,
+                               name_to_update=name_to_update,
+                               id=id)
 
 # localhost:5000/user/Colani
 @app.route('/user/<name>')
