@@ -10,13 +10,35 @@
             <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}" style="color: rgb(147, 135, 135);">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('user', name='Colani') }}" style="color: rgb(147, 135, 135);">User Profile</a>
+            <a class="nav-link" href="{{ url_for('user', name='Colani') }}" 
+            style="color: rgb(147, 135, 135);">User Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('name') }}" style="color: rgb(147, 135, 135);">Name</a>
+            <a class="nav-link" href="{{ url_for('name') }}" 
+            style="color: rgb(147, 135, 135);">Name</a>
+          </li>
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}" 
+            style="color: rgb(147, 135, 135);">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}" 
+            style="color: rgb(147, 135, 135);">Login</a>
+          </li>
+          {% endif %}
+          <li class="nav-item"></li>
+            <a class="nav-link" href="{{ url_for('add_user') }}" 
+            style="color: rgb(147, 135, 135);">Add User</a>
           </li>
           <li class="nav-item"></li>
-            <a class="nav-link" href="{{ url_for('add_user') }}" style="color: rgb(147, 135, 135);">Add User</a>
+            <a class="nav-link" href="{{ url_for('add_post') }}" 
+            style="color: rgb(147, 135, 135);">Add Blog</a>
+          </li>
+          <li class="nav-item"></li>
+            <a class="nav-link" href="{{ url_for('posts') }}" 
+            style="color: rgb(147, 135, 135);">Blog Posts</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
