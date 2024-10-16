@@ -19,6 +19,10 @@
           </li>
           {% if current_user.is_authenticated %}
           <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('dashboard') }}" 
+            style="color: rgb(147, 135, 135);">Dashboard</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{ url_for('logout') }}" 
             style="color: rgb(147, 135, 135);">Logout</a>
           </li>
@@ -27,11 +31,12 @@
             <a class="nav-link" href="{{ url_for('login') }}" 
             style="color: rgb(147, 135, 135);">Login</a>
           </li>
-          {% endif %}
           <li class="nav-item"></li>
             <a class="nav-link" href="{{ url_for('add_user') }}" 
-            style="color: rgb(147, 135, 135);">Add User</a>
+            style="color: rgb(147, 135, 135);">Register</a>
           </li>
+          {% endif %}
+          
           <li class="nav-item"></li>
             <a class="nav-link" href="{{ url_for('add_post') }}" 
             style="color: rgb(147, 135, 135);">Add Blog</a>

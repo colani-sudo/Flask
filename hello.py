@@ -75,7 +75,7 @@ def logout():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required             # checks if user is logged in
 def dashboard():
-    flash("You are logged in!")
+    #flash("You are logged in!")    # this flash message is redundant
     return render_template('dashboard.html')
 
 
