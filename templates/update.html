@@ -2,59 +2,67 @@
 
 {% block content %}
 
-<!-- To print messages from flash() in the name method -->
-{% for message in get_flashed_messages() %}
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
-	  {{ message }}
-	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-{% endfor %}
+    <!-- To print messages from flash() in the name method -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
 
-{% if name %}
-	<h1>Update user {{ name }}</h1>
-	<br/><br/>
-    <table class="table table-hover" table-bordered table-striped>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Color</th>
-        </tr>
-        {% for our_user in our_users %}
+    {% if name %}
+        <h1>Update user {{ name }}</h1>
+        <br/><br/>
+        <table class="table table-hover" table-bordered table-striped>
             <tr>
-                <td>{{ our_user.id }}</td>
-                <td>{{ our_user.name }}</td>
-                <td>{{ our_user.email }}</td>
-                <td>{{ our_user.favorite_color }}</td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Color</th>
             </tr>
-        {% endfor %}
-    </table>
-{% else %}
-	<h1> Update User:</h1>
-	<br/>
-    <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-        <form action="/update/{{ name_to_update.id }}" method="POST">
-            {{ form.hidden_tag() }}
+            {% for our_user in our_users %}
+                <tr>
+                    <td>{{ our_user.id }}</td>
+                    <td>{{ our_user.name }}</td>
+                    <td>{{ our_user.email }}</td>
+                    <td>{{ our_user.favorite_color }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h1> Update User</h1>
+        <br/>
+        {% if id == current_user.id %}
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+            <form action="/update/{{ name_to_update.id }}" method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.name.label(class="form-label") }}
+                
+                {{ form.name(class="form-control", value=name_to_update.name) }}
+                <br/>
+                {{ form.username.label(class="form-label") }}
+                
+                {{ form.username(class="form-control", value=name_to_update.username) }}
+                <br/>
+                {{ form.email.label(class="form-label") }}
+                
+                {{ form.email(class="form-control", value=name_to_update.email) }}
+                <br/>
+                {{ form.favorite_color.label(class="form-label") }}
+                
+                {{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
+                <br/>
+                {{ form.submit(class="btn btn-primary") }}
 
-            {{ form.name.label(class="form-label") }}
-            
-            {{ form.name(class="form-control", value=name_to_update.name) }}
-            <br/>
-            {{ form.email.label(class="form-label") }}
-            
-            {{ form.email(class="form-control", value=name_to_update.email) }}
-            <br/>
-            {{ form.favorite_color.label(class="form-label") }}
-            
-            {{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
-            <br/>
-            {{ form.submit(class="btn btn-primary") }}
+                <a href="{{ url_for('delete', id=id) }}" class="btn btn-danger">Delete</a>
+            </form>
+        </div>
+        <br/>
+        {% else %}
+            <h2>Access Denied!</h2>
+            <p>Sorry, you cannot access this user profile.</p>
+        {% endif %}
 
-            <a href="{{ url_for('delete', id=id) }}" class="btn btn-danger">Delete</a>
-        </form>
-    </div>
-<br/><br/><br/>
-
-{% endif %}
+    {% endif %}
 
 {% endblock %}

@@ -1,7 +1,8 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 
-    <h1>Hello {{ user_name|title }}</h1>   <!-- upper, lower, capitalize  -->
-
+    <h1>Admin {{ user_name|title }}</h1>   <!-- upper, lower, capitalize  -->
+    <a href="{{ url_for('add_user') }}" class="btn btn-outline-secondary btn-sm">Add Users</a>
 {% endblock %}
